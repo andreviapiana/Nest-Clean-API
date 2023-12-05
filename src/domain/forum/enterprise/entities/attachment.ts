@@ -11,9 +11,9 @@ export class Attachment extends Entity<AttachmentProps> {
     return this.props.title
   }
 
-get url() {
-  return this.props.url
-}
+  get url() {
+    return this.props.url
+  }
 
   static create(props: AttachmentProps, id?: UniqueEntityID) {
     const attachment = new Attachment(props, id)
