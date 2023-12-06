@@ -45,26 +45,26 @@ export class PrismaAnswerCommentsRepository
     return answerComments.map(PrismaAnswerCommentMapper.toDomain)
   }
 
-async findManyByAnswerIdWithAuthor(
-  answerId: string,
-  { page }: PaginationParams,
-): Promise<CommentWithAuthor[]> {
-  const answerComments = await this.prisma.comment.findMany({
-    where: {
-      answerId,
-    },
-    include: {
-      author: true,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-    take: 20,
-    skip: (page - 1) * 20,
-  })
+  async findManyByAnswerIdWithAuthor(
+    answerId: string,
+    { page }: PaginationParams,
+  ): Promise<CommentWithAuthor[]> {
+    const answerComments = await this.prisma.comment.findMany({
+      where: {
+        answerId,
+      },
+      include: {
+        author: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+    })
 
-  return answerComments.map(PrismaCommentWithAuthorMapper.toDomain)
-}
+    return answerComments.map(PrismaCommentWithAuthorMapper.toDomain)
+  }
 
   async create(answerComment: AnswerComment): Promise<void> {
     const data = PrismaAnswerCommentMapper.toPrisma(answerComment)
